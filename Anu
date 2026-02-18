@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Anu 💖</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+    font-family:'Segoe UI', sans-serif;
+    color:white;
+}
+
+.title{
+    text-align:center;
+    font-size:38px;
+    margin-top:20px;
+    color:orange;
+}
+
+.name{
+    text-align:center;
+    font-size:28px;
+    margin-top:8px;
+    color:#ff7eb3;
+}
+
+.message{
+    position:absolute;
+    left:40px;
+    top:200px;
+    font-size:16px;
+    line-height:1.7;
+    color:#ddd;
+}
+
+canvas{
+    display:block;
+    margin:auto;
+}
+
+.footer{
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    text-align:center;
+    font-size:26px;
+    opacity:0.8;
+}
+
+/* BIG FINAL TEXT */
+.final-text{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0.5);
+    font-size:64px;
+    font-weight:bold;
+    color:#ff4d6d;
+    text-shadow:
+        0 0 10px #ff4d6d,
+        0 0 20px #ff7eb3,
+        0 0 40px #ff9aa2;
+    opacity:0;
+    transition:all 2s ease;
+    text-align:center;
+}
+
+.final-text.show{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">POV: it's her birthday 💖🎉</div>
+<div class="name">Arnesha Datta (Anu) 🌸</div>
+
+<div class="message">
+Hey you 💕<br>
+Happy Birthday Anu 🎂<br>
+May God bless you ✨<br>
+And give u endless happiness 💖<br>
+Just saying… you're really special 🌷<br>
+Sending good vibes and smiles 😊<br>
+Hope today feels magical ✨
+</div>
+
+<canvas id="canvas" width="600" height="600"></canvas>
+
+<div class="footer">making sure she feels special 💝</div>
+
+<div class="final-text" id="finalText">
+Happy Birthday<br>Anu 💖
+</div>
+
+<!-- Hidden YouTube Music -->
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/jTcbNZnzXQA?autoplay=1&loop=1&playlist=jTcbNZnzXQA"
+frameborder="0"
+allow="autoplay">
+</iframe>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const hearts=[];
+const colors=["#ff4d6d","#ff758f","#ffa6c9","#ffd6e0","#ff9aa2"];
+
+function Heart(x,y){
+    this.x=x;
+    this.y=y;
+    this.size=Math.random()*6+4;
+    this.color=colors[Math.floor(Math.random()*colors.length)];
+}
+
+Heart.prototype.draw=function(){
+    ctx.fillStyle=this.color;
+    ctx.beginPath();
+    ctx.moveTo(this.x,this.y);
+    ctx.bezierCurveTo(this.x-this.size,this.y-this.size,
+        this.x-this.size*2,this.y+this.size/2,
+        this.x,this.y+this.size*2);
+    ctx.bezierCurveTo(this.x+this.size*2,this.y+this.size/2,
+        this.x+this.size,this.y-this.size,
+        this.x,this.y);
+    ctx.fill();
+};
+
+function createHeart(){
+    for(let t=0;t<Math.PI*2;t+=0.1){
+        let x=300+16*Math.pow(Math.sin(t),3)*12;
+        let y=260-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*12;
+        hearts.push(new Heart(x,y));
+    }
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    hearts.forEach(h=>h.draw());
+    requestAnimationFrame(animate);
+}
+
+createHeart();
+animate();
+
+/* SHOW FINAL BIG TEXT AFTER 6 SECONDS */
+setTimeout(()=>{
+    document.getElementById("finalText").classList.add("show");
+},6000);
+</script>
+
+</body>
+</html>
